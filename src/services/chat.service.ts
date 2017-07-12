@@ -28,7 +28,6 @@ export class chatService {
     }
 
     setUsername(username) { 
-        console.log(username)
         sessionStorage.setItem('username', username);
     }
     
