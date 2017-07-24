@@ -3,14 +3,16 @@ import { chatService } from '../../../services/chat.service';
 
 @Component({
   selector: 'chat',
-  templateUrl: 'chat.component.html'
+  templateUrl: 'chat.component.html', 
+  
 })
 export class ChatComponent {
-    messages:any = [];
-    message = '';
+    messages = [];
+    message:string = '';
     connection; 
     username = '';
     alert = '';
+    validationMessage;
     
     constructor(private ChatService: chatService) {}
 
@@ -29,8 +31,24 @@ export class ChatComponent {
     } 
  
     sendMassage() {
-        this.ChatService.sendMessage(this.message, this.username); 
-        this.message = '';
+        if (this.message.length) {
+            this.validationMessage = '';
+
+            let a = this.link(this.message);
+        
+            this.ChatService.sendMessage(a, this.username); 
+            this.message = '';
+            return
+        } 
+        this.validationMessage = "Form Is Not Valid";
+    }
+
+    link(text) {
+        var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        return text.replace(urlRegex, function(url) {
+            let a = '<a href="' + url + '">' + url + '</a>';
+            return a;
+        });
     }
 
     setUsername() {

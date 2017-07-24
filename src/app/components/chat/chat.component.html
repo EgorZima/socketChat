@@ -1,21 +1,32 @@
 <div class="row">
-    <div>
+    <form>
         <label> Username: </label>
-        <input class="form-control" type="text" [(ngModel)]="username" name="username" >
-        <br>
-        <button class="btn btn-default" (click)="setUsername()"> Submit </button>
-    </div>
+        <input id="input"
+        class="form-control" 
+        type="text"
+        [(ngModel)]="username" 
+        name="username" >
+    </form>
 </div>
 
 <h1> SocketChat </h1>
 <div *ngIf="username">
-    <input class="form-control" type="text" placeholder="Your Massage..." [(ngModel)]="message" name="massage" (keyup.enter)="sendMassage()">
-
-    <div *ngFor="let mes of messages">
-        <div class="well"> 
-            <strong> {{mes.username}}: </strong>{{mes.text}}
+        <div class="input-group">
+        <input type="text" class="form-control" placeholder="Your message..." [(ngModel)]="message" name="massage" (keyup.enter)="sendMassage()">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" (click)="sendMassage()">SEND</button>
+        </span>
         </div>
-    </div>
+    
+        <div class="alert alert-danger" *ngIf="validationMessage">
+            {{validationMessage}}
+        </div>
+
+        <div *ngFor="let mes of messages">
+            <div class="well" *ngIf="mes.username"> 
+                <strong> {{mes.username}}: </strong> <span [innerHTML]="mes.text"> </span>
+            </div>
+        </div>
 </div>
 
 <div class="text-center" *ngIf="!username">

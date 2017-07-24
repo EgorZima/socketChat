@@ -22,7 +22,6 @@ export class chatService {
         })
         return observable
     }
-
     getUsername() {
         return sessionStorage.getItem('username');
     }
